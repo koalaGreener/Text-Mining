@@ -49,7 +49,7 @@ def readTheFile(document_name, query_name):
             document_length[name] = length_of_document
             document_num_name[name] = document_only_num_map
 
-    print(document_num_name)
+    #print(document_num_name)
     # avgdl calculated
     sum = 0
     for every in document_only_num_list:
@@ -59,7 +59,7 @@ def readTheFile(document_name, query_name):
 
 
 
-    print("start")
+    print("start nqi")
 
     #nqi list
     nqi_list = {}
@@ -68,25 +68,34 @@ def readTheFile(document_name, query_name):
         for qi_value in qi_list:
             nqi_list[qi_value] = func(qi_value, document_num_name)
 
-
-    print("end")
-    count = 0
+    print("end nqi")
     for query_item in query_id:
         # index 保存query中所出现的 term
         qi_list = query_id.get(query_item)
         #print(qi_list)
+        count = 0
         for document_item in document_id:
             score = 0.0
+
             # D = the length of the document D in words
             D = document_length.get(document_item.split(" ")[0])
+
             for qi in qi_list:
+
                 #fqid 计算
-                # 这里有问题 fqid
-                fqid = document_num_name.get(document_item).get(str(qi))
+                fqid = 0
+                fqid_dict = document_num_name.get(document_item)
+                if fqid_dict.get(qi) == None:
+                    fqid = 0
+                else:
+                    fqid = fqid_dict.get(qi)
+
                 #nqi 计算
                 nqi = nqi_list.get(qi)
+
+                #score 计算
                 score += (log((N - nqi + 0.5) / (nqi + 0.5))) * 1.0 * fqid * (k + 1)/ (fqid + k * (1 - b + (b * D / avgdl)))
-            print(count, query_item, document_item, score)
+                print(count, query_item, document_item, score)
             count += 1
 
 
