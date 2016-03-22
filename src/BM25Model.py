@@ -10,6 +10,8 @@ def func(qi, document_num_name):
 
 
 def readTheFile(document_name, query_name):
+
+    return_value = []
     # Parameters
     b = 0.75
     k = 1.5
@@ -101,11 +103,13 @@ def readTheFile(document_name, query_name):
 
         # output the formatted result
         for everyitem in ranked_result:
-            print(str(query_item) + " Q0 " + str(everyitem).strip("' ( '").split("',")[0] + " " + str(ranking) +
-                  str(everyitem).strip("'( ')").split(",")[1] + " bm25")
+            #print(str(query_item) + " Q0 " + str(everyitem).strip("' ( '").split("',")[0] + " " + str(ranking) + str(everyitem).strip("'( ')").split(",")[1] + " bm25")
+            return_value.append(str(query_item) + " Q0 " + str(everyitem).strip("' ( '").split("',")[0] + " " + str(ranking) + str(everyitem).strip("'( ')").split(",")[1] + " bm25")
             ranking += 1
-
+    return return_value
 
 '''import the data'''
 if __name__ == '__main__':
-    readTheFile("../data/document_term_vectors.dat", "../data/query_term_vectors.dat")
+    result = readTheFile("../data/document_term_vectors.dat", "../data/query_term_vectors.dat")
+    for item in result:
+        print(item)
