@@ -120,6 +120,13 @@ if __name__ == '__main__':
     dcg_data = readTheFile("../data/document_term_vectors.dat", "../data/query_term_vectors.dat")
 
 
+
+
+
+
+
+
+'''
     dcg_term_rankging_score = []
     value = {}
     for data in dcg_data:
@@ -130,5 +137,5 @@ if __name__ == '__main__':
         if int(ranking) < 50:
             dcg_term_rankging_score.append(str(id) + " " + str(ranking) + " " + str(score))
 
-
+'''
 

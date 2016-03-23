@@ -1,19 +1,32 @@
 from math import log2
 
 
-def readTheFile_idcg(filename):
+def readTheFile_dcg(filename):
     term_rankging_score = []
     # read the idcg data
     with open(filename) as infile:
         for line in infile:
-            temp = {}
-            each = line.split(" ")
-            id = each[0]
-            ranking = each[3]
-            score = each[4]
-            if int(ranking) < 50:
-                term_rankging_score.append(str(id) + " " + str(ranking) + " " + str(score))
+            if int(line.split(" ")[3]) < 50:
+                term_rankging_score.append(line.split(" ")[0] + " " + line.split(" ")[2])
         return term_rankging_score
+
+
+def readTheFile_rel(filename):
+    with open(filename) as infile:
+        full_dict = {}
+        for line in infile:
+            # str:int
+            temp_dict = {}
+            full_dict[line.split(" ")[0] + " " + line.split(" ")[2]] = int(line.split(" ")[3])
+        return full_dict
+        # print(full_dict)
+
+def readTheFile_term(filename):
+    with open(filename) as infile:
+        return_value = {}
+        for line in infile:
+            return_value[(line.split(" ")[0])] = ""
+    return return_value
 
 
 def calculated_DCG_score(input_data):
@@ -54,10 +67,48 @@ def calculated_DCG_score(input_data):
     return return_dcg_term_value
 
 
+def calculate_ndcg(term_id, k, term_docid, term_docid_rel_dict):
+    rel_list = []
+    start_index = 50 * (int(term_id) - 201)
+    end_index = start_index + k
+    #print(start_index, end_index)
+    for i in range (start_index, end_index):
+        #print(term_docid[i])
+        #print(term_docid_rel_dict.get(term_docid[i]))
+        rel_list.append(term_docid_rel_dict.get(term_docid[i]))
+    #print(rel_list)
+    return rel_list
+
+
 if __name__ == '__main__':
 
-    idcg_term_rankging_score = readTheFile_idcg("../data/BM25b0.75_0.res")
-    idcg_value = calculated_DCG_score(idcg_term_rankging_score)
+    # output the data with (id + ranking + score)
+    term_docid = readTheFile_dcg("../data/BM25b0.75_0.res")
+    print(term_docid)
+    #print(len(term_docid))
+
+    # intput the data of Rel (str:int)
+    term_docid_rel_dict = readTheFile_rel("../data/qrels.adhoc.txt")
+    print(term_docid_rel_dict)
+
+    #only the term id int
+    term_dict = readTheFile_term("../data/BM25b0.75_0.res")
+    print(term_dict)
+
+    #Every Term
+    for term_id in term_dict:
+        #print("Term:   " + str(term_id))
+
+        #这里term_id 不是彻底的1-250 所以函数里面的 term_id-201会越界 因为会最后超出 只有2400个
+        for k in (1, 2):
+            rel_list = calculate_ndcg(249, k, term_docid, term_docid_rel_dict)
+
+
+
+
+
+'''
+    # calculated the NDCG score
     k_score = {}
     term_k_score = {}
     # print((dcg_value))
@@ -72,3 +123,4 @@ if __name__ == '__main__':
         term_k_score[index_term] = k_score
 
     print(term_k_score)
+'''
