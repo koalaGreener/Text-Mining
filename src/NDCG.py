@@ -69,7 +69,15 @@ def calculated_DCG_score(input_data):
 
 def calculate_ndcg(term_id, k, term_docid, term_docid_rel_dict):
     rel_list = []
-    start_index = 50 * (int(term_id) - 201)
+
+    # 241, 219 do not exist
+    if int(term_id) < 219:
+        start_index = 50 * (int(term_id) - 201)
+    elif int(term_id) < 241 and int(term_id) > 219:
+        start_index = 50 * (int(term_id) - 201 - 1)
+    else:
+        start_index = 50 * (int(term_id) - 201 - 2)
+
     end_index = start_index + k
     #print(start_index, end_index)
     for i in range (start_index, end_index):
@@ -77,7 +85,10 @@ def calculate_ndcg(term_id, k, term_docid, term_docid_rel_dict):
         #print(term_docid_rel_dict.get(term_docid[i]))
         rel_list.append(term_docid_rel_dict.get(term_docid[i]))
     #print(rel_list)
-    return rel_list
+    #return rel_list
+
+    # I've got rel_list
+
 
 
 if __name__ == '__main__':
@@ -98,10 +109,9 @@ if __name__ == '__main__':
     #Every Term
     for term_id in term_dict:
         #print("Term:   " + str(term_id))
-
         #这里term_id 不是彻底的1-250 所以函数里面的 term_id-201会越界 因为会最后超出 只有2400个
         for k in (1, 2):
-            rel_list = calculate_ndcg(249, k, term_docid, term_docid_rel_dict)
+            rel_list = calculate_ndcg(250, k, term_docid, term_docid_rel_dict)
 
 
 
