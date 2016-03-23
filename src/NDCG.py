@@ -1,6 +1,7 @@
 from math import log2
 
 
+# return the term_id and doc_id in order
 def readTheFile_dcg(filename):
     term_rankging_score = []
     # read the idcg data
@@ -10,7 +11,7 @@ def readTheFile_dcg(filename):
                 term_rankging_score.append(line.split(" ")[0] + " " + line.split(" ")[2])
         return term_rankging_score
 
-
+# return the term_id and doc_id and relevant rel_score
 def readTheFile_rel(filename):
     with open(filename) as infile:
         full_dict = {}
@@ -21,6 +22,7 @@ def readTheFile_rel(filename):
         return full_dict
         # print(full_dict)
 
+# return the term_ids that appear in the file
 def readTheFile_term(filename):
     with open(filename) as infile:
         return_value = {}
@@ -28,45 +30,7 @@ def readTheFile_term(filename):
             return_value[(line.split(" ")[0])] = ""
     return return_value
 
-
-def calculated_DCG_score(input_data):
-    preprocessed_output_dict = {}
-    ranking_score = {}
-    return_dcg_term_value = {}
-    count = 0
-    for data in input_data:
-        id = data.split(" ")[0]
-        ranking = data.split(" ")[1]
-        score = data.split(" ")[2]
-        # print(id,ranking,score)
-        ranking_score[ranking] = score
-        count += 1
-        if count == 50:
-            preprocessed_output_dict[id] = ranking_score
-            ranking_score = {}
-            count = 0
-    count = 0
-    for data in preprocessed_output_dict:
-        # data = 201
-        # K:score
-        dcg_value = {}
-        ranking_score_dict = preprocessed_output_dict.get(data)
-        for i in range(1, 51):
-            temp_dcg_sum = 0.0
-            if i == 1:
-                dcg = ranking_score_dict.get(str(i - 1))
-                temp_dcg_sum += float(dcg)
-                dcg_value[i] = float(dcg)
-            else:
-                dcg = temp_dcg_sum + float(ranking_score_dict.get(str(i - 1))) / log2(i)
-                dcg_value[i] = float(dcg)
-        count += 1
-        # print(data, dcg_value)
-        return_dcg_term_value[data] = dcg_value
-    # print(count)
-    return return_dcg_term_value
-
-
+# calculated the score of ndcg
 def calculate_ndcg(term_id, k, term_docid, term_docid_rel_dict):
     rel_list = []
 
@@ -88,8 +52,17 @@ def calculate_ndcg(term_id, k, term_docid, term_docid_rel_dict):
     #return rel_list
 
     # I've got rel_list
+    #print(rel_list)
+    rel_list_sorted = sorted(rel_list, reverse=True)
+    #print(rel_list_sorted)
+    dcg_score = float(rel_list[0])
+    idcg_score = float(rel_list_sorted[0])
+    for index in range(1, k):
+        dcg_score += (rel_list[index] / log2(index + 1))
+    for index in range(1, k):
+        idcg_score += (rel_list_sorted[index] / log2(index + 1))
 
-
+    return dcg_score/idcg_score
 
 if __name__ == '__main__':
 
@@ -107,30 +80,20 @@ if __name__ == '__main__':
     print(term_dict)
 
     #Every Term
-    for term_id in term_dict:
+    #for term_id in term_dict:
         #print("Term:   " + str(term_id))
         #这里term_id 不是彻底的1-250 所以函数里面的 term_id-201会越界 因为会最后超出 只有2400个
-        for k in (1, 2):
-            rel_list = calculate_ndcg(250, k, term_docid, term_docid_rel_dict)
+        #for k in (50, 2):
+    rel_list = calculate_ndcg(250, 5, term_docid, term_docid_rel_dict)
 
 
 
 
 
 '''
-    # calculated the NDCG score
-    k_score = {}
-    term_k_score = {}
-    # print((dcg_value))
-    # print((idcg_value))
 
-    # calculate the NDCG
-    for index_term in idcg_value:
-        k_score = {}
-        for index_K in range(1, 51):
-            ndcg = idcg_value[index_term][index_K]
-            k_score[index_K] = ndcg
-        term_k_score[index_term] = k_score
 
-    print(term_k_score)
+
+
+
 '''
