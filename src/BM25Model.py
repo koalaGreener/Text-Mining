@@ -117,25 +117,5 @@ def readTheFile(document_name, query_name):
 if __name__ == '__main__':
 
     # import the data
-    dcg_data = readTheFile("../data/document_term_vectors.dat", "../data/query_term_vectors.dat")
-
-
-
-
-
-
-
-
-'''
-    dcg_term_rankging_score = []
-    value = {}
-    for data in dcg_data:
-        each = data.split(" ")
-        id = each[0]
-        ranking = each[3]
-        score = each[4]
-        if int(ranking) < 50:
-            dcg_term_rankging_score.append(str(id) + " " + str(ranking) + " " + str(score))
-
-'''
-
+    dcg_data = readTheFile("../data/Q1/document_term_vectors.dat", "../data/Q1/query_term_vectors.dat")
+    

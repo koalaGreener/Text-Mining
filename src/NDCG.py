@@ -75,50 +75,39 @@ def calculate_ndcg(term_id, k, term_docid, term_docid_rel_dict):
 if __name__ == '__main__':
 
     # output the data with (id + ranking + score)
-    term_docid = readTheFile_dcg("../data/BM25b0.75_0.res")
+    term_docid = readTheFile_dcg("../data/Q2/BM25b0.75_0.res")
     #print(term_docid)
     #print(len(term_docid))
 
     # intput the data of Rel (str:int)
-    term_docid_rel_dict = readTheFile_rel("../data/qrels.adhoc.txt")
+    term_docid_rel_dict = readTheFile_rel("../data/Q2/qrels.adhoc.txt")
     #print(term_docid_rel_dict)
 
     #only the term id int
-    term_dict = readTheFile_term("../data/BM25b0.75_0.res")
+    term_dict = readTheFile_term("../data/Q2/BM25b0.75_0.res")
     #print(term_dict)
 
     #Every Term
     avg_ndcg_score = [0.0] * 51
     for term_id in term_dict:
-        print("")
-        print("Term:|   " + str(term_id))
-        print("")
-        #这里term_id 不是彻底的1-250 所以函数里面的 term_id-201会越界 因为会最后超出 只有2400个
+        # if you want to detailed data of each term_id, you should delete the comments below
+        #print("")
+        #print("Term:|   " + str(term_id))
+        #print("K    |   NDCG@K")
         for k in (1, 5, 10, 20, 30, 40, 50):
             rel_list = calculate_ndcg(term_id, k, term_docid, term_docid_rel_dict)
             avg_ndcg_score[k] += rel_list
-            if( k == 1 or k == 5):
-                print(str(k) + "    |   " + str(rel_list))
-            else:
-                print(str(k) + "   |   " + str(rel_list))
+            #if( k == 1 or k == 5):
+                #print(str(k) + "    |   %.2f" % (rel_list))
+            #else:
+                #print(str(k) + "   |   %.2f" % (rel_list))
 
-    print("")
+    #print("")
     print("bm25")
-    print("1     |   " + str(avg_ndcg_score[1]/48))
-    print("5     |   " + str(avg_ndcg_score[5]/48))
-    print("10    |   " + str(avg_ndcg_score[10]/48))
-    print("20    |   " + str(avg_ndcg_score[20]/48))
-    print("30    |   " + str(avg_ndcg_score[30]/48))
-    print("40    |   " + str(avg_ndcg_score[40]/48))
-    print("50    |   " + str(avg_ndcg_score[50]/48))
-
-
-
-
-'''
-
-
-
-
-
-'''
+    print("1    |   %.2f"  % ((avg_ndcg_score[1]/48)))
+    print("5    |   %.2f"  % (avg_ndcg_score[5]/48))
+    print("10   |   %.2f"  % (avg_ndcg_score[10]/48))
+    print("20   |   %.2f"  % (avg_ndcg_score[20]/48))
+    print("30   |   %.2f"  % (avg_ndcg_score[30]/48))
+    print("40   |   %.2f"  % (avg_ndcg_score[40]/48))
+    print("50   |   %.2f"  % (avg_ndcg_score[50]/48))
