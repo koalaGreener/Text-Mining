@@ -67,12 +67,13 @@ def mmr(temp, document_term_vector, query_term_vector):  # [] {} {}
     # query_term_vector  -> q
     D = []  # 全部记录在案的 doc_id 100个
     Dq = []  # 那个不断放进去的
-
+    mmr_query_id = 0
     chosen_score = 0.0
     chosen_document_id = ''
     first_mmr_value = 0.0
     for record in temp:
         D.append(record.split(" ")[1])
+        mmr_query_id = record.split(" ")[0]
 
     #print(len(D))
 
@@ -82,10 +83,12 @@ def mmr(temp, document_term_vector, query_term_vector):  # [] {} {}
     for document_id in D:
         # score = Calculate_mmr(query_term_vector, document_term_vector[document_id], Dq)
         score = sim(query_term_vector, document_term_vector[document_id])
-        first_mmr_value = score * 0.75
+        first_mmr_value = score * 0.5
         if score > chosen_score:
             chosen_score = score
             chosen_document_id = document_id
+
+    print(str(mmr_query_id) + "   q0    " + str(chosen_document_id) + "  " + "1" + "    " + str(chosen_score) + "      mmr")
 
     Dq.append(chosen_document_id)
     D.remove(chosen_document_id)
@@ -97,8 +100,8 @@ def mmr(temp, document_term_vector, query_term_vector):  # [] {} {}
     # 双重循环
     chosen_Dj = []
 
-
-    for i in range(99):
+    ranking = 1
+    for i in range(1, 100):
         chosen_d = ''
         chosen_score = - 9999.0
         for candidate_d in D:
@@ -109,22 +112,22 @@ def mmr(temp, document_term_vector, query_term_vector):  # [] {} {}
                     chosen_d = candidate_d
                     chosen_score = score
 
-
         #print(D)
         #print(Dq)
         #print(chosen_d)
         #print(chosen_score)
         Dq.append(chosen_d)
         D.remove(chosen_d)
-        print(chosen_d + " " + str(chosen_score))
-        print("--")
+        ranking += 1
+        print( str(mmr_query_id) + "   q0    " + chosen_d + "  " + str(ranking) + "    " + str(chosen_score) + "    mmr")
+        #print("--")
 
 
 
 def Calculate_mmr(q, d, dj):  # {} {} {}
     lambda1 = 0.5
-    lambda2 = 0.75
-    return lambda1 * sim(q, d) - (1 - lambda1) * sim(d, dj)
+    lambda2 = 0.25
+    return lambda1 * sim(q, d) - ((1 - lambda1) * sim(d, dj))
 
 
 if __name__ == '__main__':
@@ -144,4 +147,4 @@ if __name__ == '__main__':
         index = int(query_document_record_in_Q1.split(" ")[0])
         if count % 100 == 0:
             mmr(temp, document_term_vector, query_term_vector[index])
-            print("----")
+            #print("----")
