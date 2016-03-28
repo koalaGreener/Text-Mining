@@ -26,6 +26,7 @@ def readTheFile(document_name, query_name):
     document_num_name = {}
 
     # read the query
+    #return {201 : [1,2,3], 202 : [1,3,4]...}
     with open(query_name) as infile:
         for line in infile:
             temp = []
@@ -104,8 +105,7 @@ def readTheFile(document_name, query_name):
         # output the formatted result
         for everyitem in ranked_result:
             #output all of the formateed data
-            #if query_item == 201:
-                #print(str(query_item) + " Q0 " + str(everyitem).strip("' ( '").split("',")[0] + " " + str(ranking) + str(everyitem).strip("'( ')").split(",")[1] + " bm25")
+            #print(str(query_item) + " Q0 " + str(everyitem).strip("' ( '").split("',")[0] + " " + str(ranking) + str(everyitem).strip("'( ')").split(",")[1] + " bm25")
             return_value.append(str(query_item) + " Q0 " + str(everyitem).strip("' ( '").split("',")[0] + " " + str(ranking) + str(everyitem).strip("'( ')").split(",")[1] + " bm25")
             ranking += 1
     return return_value
@@ -118,4 +118,4 @@ if __name__ == '__main__':
 
     # import the data
     dcg_data = readTheFile("../data/Q1/document_term_vectors.dat", "../data/Q1/query_term_vectors.dat")
-    
+
