@@ -1,5 +1,6 @@
 # maximal marginal relevance (MMR)
 import math
+from scipy.linalg import norm
 
 
 def readTheFile_Query_document_Q1(filename):
@@ -12,10 +13,10 @@ def readTheFile_Query_document_Q1(filename):
 
 
 def readTheFile_query_term_vector(filename):
-    query_id = {}
+    query_id = dict()
     with open(filename) as infile:
         for line in infile:
-            term_id_freqency = {}
+            term_id_freqency = dict()
             line = line.strip(" \n")
             line = line.split(" ")
             for i in range(1, len(line)):
@@ -26,10 +27,10 @@ def readTheFile_query_term_vector(filename):
 
 
 def readTheFile_document_term_vector(filename):
-    document_id = {}
+    document_id = dict()
     with open(filename) as infile:
         for line in infile:
-            term_id_freqency = {}
+            term_id_freqency = dict()
             line = line.strip(" \n")
             line = line.split(" ")
             for i in range(1, len(line)):
@@ -41,58 +42,56 @@ def readTheFile_document_term_vector(filename):
 
 def sim(document_or_query, document):  # {} {}
 
-    # document_or_query   {1:1,2:1,4:1}
+    # document_or_query   {1:1,2:100,4:500}
     # document            {1:1,2:2,3:3}
 
     upper_sum = 0.0
+    lower_query_or_document_sum = 0.0
+    lower_document_sum = 0.0
+
     for term_id in document_or_query:
-        if document.get(term_id) is not None:
-            upper_sum += document[term_id]
+        lower_query_or_document_sum += (document_or_query[term_id] ** 2)
+        if term_id in document:
+            upper_sum += (document[term_id] * document_or_query[term_id])
 
-    document_sum = 0.0
     for term_id in document:
-        document_sum += document[term_id] ** 2
+        lower_document_sum += (document[term_id] ** 2)
 
-    lower_sum = math.sqrt(document_sum) + math.sqrt(len(document_or_query))
-    # print(document_or_query)
-    # print(len(document_or_query))
+    lower_sum = math.sqrt(lower_document_sum * lower_query_or_document_sum)
+
     return upper_sum / lower_sum
 
-
-def mmr(temp, document_term_vector, query_term_vector):  # [] {} {}
+def mmr(mmr_query_id, temp, document_term_vector, query_term_vector):  # [] {} {}
     # temp [201 clueweb12-1700tw-11-11014, 201 clueweb12-1700tw-11-11014]
     # document_term_vector { clueweb12-1700tw-11-11014: {1:1,2:2,3:3}}
     # query_term_vector    {1:1,2:1,3:1}
-
+    lambda1 = 0.5
+    lambda2 = 0.25
     # query_term_vector  -> q
-    D = []  # 全部记录在案的 doc_id 100个
-    Dq = []  # 那个不断放进去的
-    mmr_query_id = 0
+    D = dict()  # 全部记录在案的 doc_id 100个
+    Dq = dict()  # 那个不断放进去的
     chosen_score = 0.0
     chosen_document_id = ''
-    first_mmr_value = 0.0
+
     for record in temp:
-        D.append(record.split(" ")[1])
-        mmr_query_id = record.split(" ")[0]
+        D[record.split(" ")[1]] = 0
 
     #print(len(D))
-
     #print(Dq)
     #print(D)
     # initial
     for document_id in D:
         # score = Calculate_mmr(query_term_vector, document_term_vector[document_id], Dq)
-        score = sim(query_term_vector, document_term_vector[document_id])
-        first_mmr_value = score * 0.5
+        score = 0.5 * sim(query_term_vector, document_term_vector[document_id])
         if score > chosen_score:
             chosen_score = score
             chosen_document_id = document_id
 
-    print(str(mmr_query_id) + "   q0    " + str(chosen_document_id) + "  " + "1" + "    " + str(chosen_score) + "      mmr")
+    print("%d  q0  %s   1  %.7f" % (mmr_query_id, chosen_document_id, chosen_score))
 
-    Dq.append(chosen_document_id)
-    D.remove(chosen_document_id)
 
+    Dq[chosen_document_id] = 0
+    del D[chosen_document_id]
     #print(Dq)
     #print(D)
     #print(first_mmr_value)
@@ -105,9 +104,9 @@ def mmr(temp, document_term_vector, query_term_vector):  # [] {} {}
         chosen_d = ''
         chosen_score = - 9999.0
         for candidate_d in D:
+            temp = sim(query_term_vector, document_term_vector[candidate_d])
             for candidate_Dj in Dq:
-                score = Calculate_mmr(query_term_vector, document_term_vector[candidate_d], document_term_vector[candidate_Dj])
-                #print(score)
+                score = lambda1 * temp - ((1 - lambda1) * sim(document_term_vector[candidate_d], document_term_vector[candidate_Dj]))
                 if score > chosen_score:
                     chosen_d = candidate_d
                     chosen_score = score
@@ -116,35 +115,31 @@ def mmr(temp, document_term_vector, query_term_vector):  # [] {} {}
         #print(Dq)
         #print(chosen_d)
         #print(chosen_score)
-        Dq.append(chosen_d)
-        D.remove(chosen_d)
+        Dq[chosen_d] = 0
+        del D[chosen_d]
         ranking += 1
-        print( str(mmr_query_id) + "   q0    " + chosen_d + "  " + str(ranking) + "    " + str(chosen_score) + "    mmr")
-        #print("--")
-
-
-
-def Calculate_mmr(q, d, dj):  # {} {} {}
-    lambda1 = 0.5
-    lambda2 = 0.25
-    return lambda1 * sim(q, d) - ((1 - lambda1) * sim(d, dj))
+        print("%d  q0  %s  %2d  %.7f" % (mmr_query_id, chosen_d, ranking, chosen_score))
 
 
 if __name__ == '__main__':
+
 
     Query_document_Q1 = readTheFile_Query_document_Q1("../data/Q3/Q1answer.txt")
     document_term_vector = readTheFile_document_term_vector("../data/Q3/document_term_vectors.dat")
     query_term_vector = readTheFile_query_term_vector("../data/Q3/query_term_vectors.dat")
     # print(document_term_vector)
     # print(query_term_vector)
-    # print ((Query_document_Q1))
+    # print (len(Query_document_Q1))
 
     count = 0
-    temp = []
+    temp = dict()
     for query_document_record_in_Q1 in Query_document_Q1:
-        temp.append(query_document_record_in_Q1)
+        temp[query_document_record_in_Q1] = 0
         count += 1
-        index = int(query_document_record_in_Q1.split(" ")[0])
         if count % 100 == 0:
-            mmr(temp, document_term_vector, query_term_vector[index])
+            index = int(query_document_record_in_Q1.split(" ")[0])
+            #profile.run("mmr(int(200 + count/100), temp, document_term_vector, query_term_vector[index])")
+            #break
+            mmr(int(200 + count/100), temp, document_term_vector, query_term_vector[index])
+            temp = dict()
             #print("----")
