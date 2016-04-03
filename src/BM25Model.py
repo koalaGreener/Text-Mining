@@ -9,8 +9,7 @@ def func(qi, document_num_name):
     return nqi
 
 
-def readTheFile(document_name, query_name):
-
+def BM25(document_name, query_name):
     # the list of 'return_value' is contained with the answer
     return_value = []
 
@@ -28,7 +27,7 @@ def readTheFile(document_name, query_name):
     document_num_name = {}
 
     # read the query
-    #return {201 : [1,2,3], 202 : [1,3,4]...}
+    # return {201 : [1,2,3], 202 : [1,3,4]...}
     with open(query_name) as infile:
         for line in infile:
             temp = []
@@ -39,6 +38,7 @@ def readTheFile(document_name, query_name):
             query_id[int(line[0])] = temp
 
     # read the document
+    # fulfill the  "document_length" and "document_num_name" dicts
     with open(document_name) as infile:
         for line in infile:
             document_id.append(line.split(" ")[0])
@@ -57,7 +57,7 @@ def readTheFile(document_name, query_name):
             document_length[name] = length_of_document
             document_num_name[name] = document_only_num_map
 
-    # avgdl calculated
+    # "avgdl" calculated
     sum = 0
     for every in document_only_num_list:
         sum += int(every.split(":")[1])
@@ -75,17 +75,17 @@ def readTheFile(document_name, query_name):
         qi_list = query_id.get(query_item)
         sorted_map = {}
         ranking = 0
-        #   the second one
+        #   the second  iteration
         for document_item in document_id:
             score = 0.0
 
-            # D = the length of the document D in words
+            # "D" = the length of the document D in words
             D = document_length.get(document_item.split(" ")[0])
 
             # calculated each query_term's score and then added them into score
             for qi in qi_list:
 
-                # fqid calculated
+                # "fqid" calculated
                 fqid = 0
                 fqid_dict = document_num_name.get(document_item)
                 # if the term doesn't exist, then return 0
@@ -94,30 +94,30 @@ def readTheFile(document_name, query_name):
                 else:
                     fqid = fqid_dict.get(qi)
 
-                # nqi calculated
+                # "nqi" calculated
                 nqi = nqi_list.get(qi)
 
                 # score calculated
                 score += (log((N - nqi + 0.5) / (nqi + 0.5))) * 1.0 * fqid * (k + 1) / (
-                fqid + k * (1 - b + (b * D / avgdl)))
+                    fqid + k * (1 - b + (b * D / avgdl)))
                 sorted_map[document_item] = score
 
+        # Before the output, we need to use the sort function to sort it by value
         ranked_result = sorted(sorted_map.items(), key=lambda x: x[1])
         ranked_result.reverse()
 
         # output the formatted result
         for everyitem in ranked_result:
-            #output all of the formateed data
-            #print(str(query_item) + " Q0 " + str(everyitem).strip("' ( '").split("',")[0] + " " + str(ranking) + str(everyitem).strip("'( ')").split(",")[1] + " bm25")
-            return_value.append(str(query_item) + " Q0 " + str(everyitem).strip("' ( '").split("',")[0] + " " + str(ranking) + str(everyitem).strip("'( ')").split(",")[1] + " bm25")
+            # output all of the formateed data
+            # print(str(query_item) + " Q0 " + str(everyitem).strip("' ( '").split("',")[0] + " " + str(ranking) + str(everyitem).strip("'( ')").split(",")[1] + " bm25")
+            return_value.append(
+                str(query_item) + " Q0 " + str(everyitem).strip("' ( '").split("',")[0] + " " + str(ranking) +
+                str(everyitem).strip("'( ')").split(",")[1] + " bm25")
             ranking += 1
     return return_value
 
 
-
 '''import the data'''
 if __name__ == '__main__':
-
     # import the data
-    dcg_data = readTheFile("../data/Q1/document_term_vectors.dat", "../data/Q1/query_term_vectors.dat")
-
+    dcg_data = BM25("../data/Q1/document_term_vectors.dat", "../data/Q1/query_term_vectors.dat")

@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="54a4176c-2702-4719-875b-90d72c5c7a60" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/BM25Model.py" afterPath="$PROJECT_DIR$/src/BM25Model.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MMR.py" afterPath="$PROJECT_DIR$/src/MMR.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/NDCG.py" afterPath="$PROJECT_DIR$/src/NDCG.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/alphaNDCG.py" afterPath="$PROJECT_DIR$/src/alphaNDCG.py" />
     </list>
@@ -24,6 +24,7 @@
     <SUITE FILE_PATH="coverage/Text-Mining$MMR.coverage" NAME="MMR Coverage Results" MODIFIED="1459599702282" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
     <SUITE FILE_PATH="coverage/Text-Mining$NDCG.coverage" NAME="NDCG Coverage Results" MODIFIED="1459679339160" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
     <SUITE FILE_PATH="coverage/Text-Mining$Portfolio.coverage" NAME="Portfolio Coverage Results" MODIFIED="1459667019437" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
+    <SUITE FILE_PATH="coverage/Text-Mining$alphaNDCG.coverage" NAME="alphaNDCG Coverage Results" MODIFIED="1459719994106" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
   </component>
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
@@ -34,11 +35,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Portfolio.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/Portfolio.py">
+      <file leaf-file-name="alphaNDCG.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/alphaNDCG.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1200">
-              <caret line="80" column="4" selection-start-line="80" selection-start-column="4" selection-end-line="80" selection-end-column="4" />
+            <state relative-caret-position="349">
+              <caret line="111" column="85" selection-start-line="111" selection-start-column="85" selection-end-line="111" selection-end-column="85" />
               <folding />
             </state>
           </provider>
@@ -60,11 +61,11 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/src/mmr_faster.py" />
-        <option value="$PROJECT_DIR$/src/MMR.py" />
         <option value="$PROJECT_DIR$/src/Portfolio.py" />
-        <option value="$PROJECT_DIR$/src/alphaNDCG.py" />
         <option value="$PROJECT_DIR$/src/BM25Model.py" />
         <option value="$PROJECT_DIR$/src/NDCG.py" />
+        <option value="$PROJECT_DIR$/src/MMR.py" />
+        <option value="$PROJECT_DIR$/src/alphaNDCG.py" />
       </list>
     </option>
   </component>
@@ -144,7 +145,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="FullScreen" value="true" />
   </component>
-  <component name="RunManager" selected="Python.BM25Model">
+  <component name="RunManager" selected="Python.alphaNDCG">
     <configuration default="false" name="BM25Model" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -199,24 +200,6 @@
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
     </configuration>
-    <configuration default="false" name="mmr_faster" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="Text-Mining" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/mmr_faster.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <method />
-    </configuration>
     <configuration default="false" name="Portfolio" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -231,6 +214,24 @@
       <module name="Text-Mining" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/Portfolio.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="alphaNDCG" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="Text-Mining" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/alphaNDCG.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
@@ -447,16 +448,16 @@
       <item index="0" class="java.lang.String" itemvalue="Python.BM25Model" />
       <item index="1" class="java.lang.String" itemvalue="Python.NDCG" />
       <item index="2" class="java.lang.String" itemvalue="Python.MMR" />
-      <item index="3" class="java.lang.String" itemvalue="Python.mmr_faster" />
-      <item index="4" class="java.lang.String" itemvalue="Python.Portfolio" />
+      <item index="3" class="java.lang.String" itemvalue="Python.Portfolio" />
+      <item index="4" class="java.lang.String" itemvalue="Python.alphaNDCG" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python.BM25Model" />
-        <item index="1" class="java.lang.String" itemvalue="Python.NDCG" />
-        <item index="2" class="java.lang.String" itemvalue="Python.Portfolio" />
-        <item index="3" class="java.lang.String" itemvalue="Python.MMR" />
-        <item index="4" class="java.lang.String" itemvalue="Python.mmr_faster" />
+        <item index="0" class="java.lang.String" itemvalue="Python.alphaNDCG" />
+        <item index="1" class="java.lang.String" itemvalue="Python.BM25Model" />
+        <item index="2" class="java.lang.String" itemvalue="Python.NDCG" />
+        <item index="3" class="java.lang.String" itemvalue="Python.Portfolio" />
+        <item index="4" class="java.lang.String" itemvalue="Python.MMR" />
       </list>
     </recent_temporary>
   </component>
@@ -486,7 +487,7 @@
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.36918992" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.33997345" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
@@ -691,34 +692,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/alphaNDCG.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="900">
-          <caret line="187" column="0" selection-start-line="187" selection-start-column="0" selection-end-line="187" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/BM25Model.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="241">
-          <caret line="66" column="17" selection-start-line="66" selection-start-column="17" selection-end-line="66" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/NDCG.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2490">
-          <caret line="166" column="37" selection-start-line="166" selection-start-column="23" selection-end-line="166" selection-end-column="37" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/MMR.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-595">
-          <caret line="63" column="4" selection-start-line="63" selection-start-column="4" selection-end-line="63" selection-end-column="4" />
+        <state relative-caret-position="1740">
+          <caret line="116" column="23" selection-start-line="116" selection-start-column="23" selection-end-line="116" selection-end-column="23" />
           <folding />
         </state>
       </provider>
@@ -727,6 +704,30 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1200">
           <caret line="80" column="4" selection-start-line="80" selection-start-column="4" selection-end-line="80" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/MMR.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="380">
+          <caret line="115" column="0" selection-start-line="115" selection-start-column="0" selection-end-line="115" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/NDCG.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="200">
+          <caret line="141" column="18" selection-start-line="0" selection-start-column="0" selection-end-line="190" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/alphaNDCG.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="349">
+          <caret line="111" column="85" selection-start-line="111" selection-start-column="85" selection-end-line="111" selection-end-column="85" />
           <folding />
         </state>
       </provider>

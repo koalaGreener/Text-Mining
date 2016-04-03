@@ -65,11 +65,12 @@ def mmr(mmr_query_id, temp, document_term_vector, query_term_vector):  # [] {} {
     # temp [201 clueweb12-1700tw-11-11014, 201 clueweb12-1700tw-11-11014]
     # document_term_vector { clueweb12-1700tw-11-11014: {1:1,2:2,3:3}}
     # query_term_vector    {1:1,2:1,3:1}
+
     lambda2 = 0.5
     lambda1 = 0.25
     # query_term_vector  -> q
-    D = dict()  # 全部记录在案的 doc_id 100个
-    Dq = dict()  # 那个不断放进去的
+    D = dict()  # The D dcit included all of the doc_id, 100 doc_id
+    Dq = dict()  # The Dq dict is empty at the very beginning
     chosen_score = 0.0
     chosen_document_id = ''
 
@@ -79,7 +80,9 @@ def mmr(mmr_query_id, temp, document_term_vector, query_term_vector):  # [] {} {
     #print(len(D))
     #print(Dq)
     #print(D)
-    # initial
+
+
+    # For the first one, we need to calculate the score manually
     for document_id in D:
         # score = Calculate_mmr(query_term_vector, document_term_vector[document_id], Dq)
         score = 0.25 * sim(query_term_vector, document_term_vector[document_id])
@@ -96,7 +99,7 @@ def mmr(mmr_query_id, temp, document_term_vector, query_term_vector):  # [] {} {
     #print(D)
     #print(first_mmr_value)
 
-    # 双重循环
+    # Then we will calculate the rest of the 99 score.
     chosen_Dj = []
 
     ranking = 1
@@ -111,19 +114,15 @@ def mmr(mmr_query_id, temp, document_term_vector, query_term_vector):  # [] {} {
                     chosen_d = candidate_d
                     chosen_score = score
 
-        #print(D)
-        #print(Dq)
-        #print(chosen_d)
-        #print(chosen_score)
         Dq[chosen_d] = 0
         del D[chosen_d]
         ranking += 1
         print("%d  q0  %s  %2d  %.7f" % (mmr_query_id, chosen_d, ranking, chosen_score))
 
-
+# main function
 if __name__ == '__main__':
 
-
+    # read the data
     Query_document_Q1 = readTheFile_Query_document_Q1("../data/Q3/Q1answer.txt")
     document_term_vector = readTheFile_document_term_vector("../data/Q3/document_term_vectors.dat")
     query_term_vector = readTheFile_query_term_vector("../data/Q3/query_term_vectors.dat")
@@ -131,15 +130,18 @@ if __name__ == '__main__':
     # print(query_term_vector)
     # print (len(Query_document_Q1))
 
+
+    # Use the count to call the mmr when data reached a fixed value
     count = 0
     temp = dict()
     for query_document_record_in_Q1 in Query_document_Q1:
         temp[query_document_record_in_Q1] = 0
         count += 1
+        # For every 100 data, we will use the MMR to calculate the score, because every 100 data the term_id changed (201 -> 202 -> 203)
         if count % 100 == 0:
+            # find out what exactly t he term_id is, such as 201, 202
             index = int(query_document_record_in_Q1.split(" ")[0])
-            #profile.run("mmr(int(200 + count/100), temp, document_term_vector, query_term_vector[index])")
-            #break
+            # Used the mmr function to calculate the score
             mmr(int(200 + count/100), temp, document_term_vector, query_term_vector[index])
+            # clear the dictionary
             temp = dict()
-            #print("----")
