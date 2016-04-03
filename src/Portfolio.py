@@ -123,10 +123,7 @@ def portfolio(mmr_query_id, Q1_sequence, document_term_vector):  # [] {}
         chosen_score = -999.0
 
 
-    #print(Dq)
-    #print(D)
-    #print(first_mmr_value)
-
+######################################## # main function Started here ################################################
 
 if __name__ == '__main__':
 

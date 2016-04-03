@@ -44,7 +44,6 @@ def calculate_ndcg_MMR(term_id, k, term_docid, term_docid_rel_dict, term_docid_d
     # alpha NDCG has parameters and one more list "term_docid_diversity_score_dict"
     alpha = 0.1
 
-
     # rel_list is the list that contains all the rel score value
     rel_list = []
 
@@ -81,6 +80,8 @@ def calculate_ndcg_MMR(term_id, k, term_docid, term_docid_rel_dict, term_docid_d
     else:
         return dcg_score / idcg_score
 
+
+######################################## # main function Started here ################################################
 
 
 # main function

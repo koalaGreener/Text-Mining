@@ -10,6 +10,7 @@ def func(qi, document_num_name):
     return nqi
 
 
+# Implemented the BM25 algorithm
 def BM25(document_name, query_name):
     # the list of 'return_value' is contained with the answer
     return_value = []
@@ -116,6 +117,9 @@ def BM25(document_name, query_name):
                 str(everyitem).strip("'( ')").split(",")[1] + " bm25")
             ranking += 1
     return return_value
+
+
+######################################## # main function Started here ################################################
 
 
 '''import the data'''

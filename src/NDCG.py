@@ -2,6 +2,7 @@ from math import log2
 
 
 # return the term_id and doc_id in order
+# That is for MMR and Portfolio
 def readTheFile_dcg_MMR(filename):
     term_rankging_score = []
     # read the idcg data
@@ -17,7 +18,6 @@ def readTheFile_dcg(filename):
     # read the idcg data
     with open(filename) as infile:
         for line in infile:
-            # print((line.split(" ")))
             if int(line.split(" ")[3]) < 50:
                 term_rankging_score.append(line.split(" ")[0] + " " + line.split(" ")[2])
         return term_rankging_score
@@ -29,10 +29,8 @@ def readTheFile_rel(filename):
         full_dict = {}
         for line in infile:
             # str:int
-            temp_dict = {}
             full_dict[line.split(" ")[0] + " " + line.split(" ")[2]] = int(line.split(" ")[3])
         return full_dict
-        # print(full_dict)
 
 
 # return the term_ids that appear in the file
@@ -45,6 +43,7 @@ def readTheFile_term(filename):
 
 
 # calculated the score of ndcg
+# That is for MMR and Portfolio
 def calculate_ndcg_MMR(term_id, k, term_docid, term_docid_rel_dict):
     rel_list = []
 
@@ -52,7 +51,6 @@ def calculate_ndcg_MMR(term_id, k, term_docid, term_docid_rel_dict):
     start_index = 50 * (int(term_id) - 201)
 
     end_index = start_index + k
-    # print(start_index, end_index)
     for i in range(start_index, end_index):
         # print(term_docid[i])
         # print(term_docid_rel_dict.get(term_docid[i]))
@@ -62,13 +60,9 @@ def calculate_ndcg_MMR(term_id, k, term_docid, term_docid_rel_dict):
         else:
             rel_list.append(value)
 
-    # print(rel_list)
-    # return rel_list
-
     # I've got rel_list
     rel_list_sorted = sorted(rel_list, reverse=True)
-    # print(rel_list)
-    # print(rel_list_sorted)
+
     dcg_score = float(rel_list[0])
     idcg_score = float(rel_list_sorted[0])
     for index in range(1, k):
@@ -76,7 +70,6 @@ def calculate_ndcg_MMR(term_id, k, term_docid, term_docid_rel_dict):
     for index in range(1, k):
         idcg_score += (rel_list_sorted[index] / log2(index + 1))
 
-    # print(dcg_score/idcg_score)
     if idcg_score == 0:
         return 0.0
     else:
@@ -105,13 +98,10 @@ def calculate_ndcg(term_id, k, term_docid, term_docid_rel_dict):
             rel_list.append(0)
         else:
             rel_list.append(value)
-    # print(rel_list)
-    # return rel_list
 
     # I've got rel_list
     rel_list_sorted = sorted(rel_list, reverse=True)
-    # print(rel_list)
-    # print(rel_list_sorted)
+
     dcg_score = float(rel_list[0])
     idcg_score = float(rel_list_sorted[0])
     for index in range(1, k):
@@ -119,12 +109,13 @@ def calculate_ndcg(term_id, k, term_docid, term_docid_rel_dict):
     for index in range(1, k):
         idcg_score += (rel_list_sorted[index] / log2(index + 1))
 
-    # print(dcg_score/idcg_score)
     if idcg_score == 0:
         return 0.0
     else:
         return dcg_score / idcg_score
 
+
+######################################## # main function Started here ################################################
 
 
 # main function
@@ -144,19 +135,21 @@ if __name__ == '__main__':
     # print(term_dict)
 
 
-
+    ######################################### The result depends on the input data ################################################
     # The default one is BM25, but if we import the MMR or Portfolio data, we can also calculate the value
     # You should notice that the  "readTheFile_dcg_MMR" function is different from the "readTheFile_dcg"
     # While the "    readTheFile_rel" and "    readTheFile_term"  is still the same
 
 
+    ##### If you want to see the NDCG score of MMR or Portfolio, delete the comment line
+
     # MMR NDCG score
-    term_dict = readTheFile_term("../output/Q3/MMR_0.5.txt")
-    term_docid = readTheFile_dcg_MMR("../output/Q3/MMR_0.5.txt")
+    #term_dict = readTheFile_term("../output/Q3/MMR_0.5.txt")
+    #term_docid = readTheFile_dcg_MMR("../output/Q3/MMR_0.5.txt")
 
     # Portfolio NDCG score
-    term_dict = readTheFile_term("../output/Q4/Portfolio_4.txt")
-    term_docid = readTheFile_dcg_MMR("../output/Q4/Portfolio_4.txt")
+    #term_dict = readTheFile_term("../output/Q4/Portfolio_4.txt")
+    #term_docid = readTheFile_dcg_MMR("../output/Q4/Portfolio_4.txt")
 
     # Every Term
     avg_ndcg_score = [0.0] * 51
@@ -167,16 +160,17 @@ if __name__ == '__main__':
         # print("K    |   NDCG@K")
         for k in (1, 5, 10, 20, 30, 40, 50):
             rel_list = calculate_ndcg(term_id, k, term_docid, term_docid_rel_dict)
-            rel_list = calculate_ndcg_MMR(term_id, k, term_docid, term_docid_rel_dict)
+            #rel_list = calculate_ndcg_MMR(term_id, k, term_docid, term_docid_rel_dict)
             # only assign to the array that have k value
             avg_ndcg_score[k] += rel_list
 
+    #The BM25 one did not have two term_id, so the length should be 48
     Denominator_BM25 = 48
     Denominator_MMR = 50
-    Denominator = Denominator_MMR
+    Denominator = Denominator_BM25
     print("bm25")
-    print("1    |   %.2f" % ((avg_ndcg_score[1] / Denominator)))
-    print("5    |   %.2f" % (avg_ndcg_score[5] / Denominator))
+    print("1    |   %.2f" % (avg_ndcg_score[1] /  Denominator))
+    print("5    |   %.2f" % (avg_ndcg_score[5] /  Denominator))
     print("10   |   %.2f" % (avg_ndcg_score[10] / Denominator))
     print("20   |   %.2f" % (avg_ndcg_score[20] / Denominator))
     print("30   |   %.2f" % (avg_ndcg_score[30] / Denominator))
