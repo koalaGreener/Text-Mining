@@ -145,8 +145,8 @@ if __name__ == '__main__':
 
 
     # MMR NDCG score
-    term_dict = readTheFile_term("../output/Q3/MMR_0.25.txt")
-    term_docid = readTheFile_dcg_MMR("../output/Q3/MMR_0.25.txt")
+    term_dict = readTheFile_term("../output/Q3/MMR_0.5.txt")
+    term_docid = readTheFile_dcg_MMR("../output/Q3/MMR_0.5.txt")
 
 
 
@@ -170,7 +170,9 @@ if __name__ == '__main__':
                 #print(str(k) + "   |   %.2f" % (rel_list))
 
     #print("")
-    fenmu = 50
+    fenmu_BM25 = 48
+    fenmu_MMR = 50
+    fenmu = fenmu_MMR
     print("bm25")
     print("1    |   %.2f"  % ((avg_ndcg_score[1]/fenmu)))
     print("5    |   %.2f"  % (avg_ndcg_score[5]/fenmu))
