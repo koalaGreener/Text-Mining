@@ -1,6 +1,7 @@
 from math import log
 
 
+# this function will be used when calculate the nqi_list(the number of documents containing qi)
 def func(qi, document_num_name):
     nqi = 0
     for item in document_num_name:
@@ -97,9 +98,9 @@ def BM25(document_name, query_name):
                 # "nqi" calculated
                 nqi = nqi_list.get(qi)
 
-                # score calculated
-                score += (log((N - nqi + 0.5) / (nqi + 0.5))) * 1.0 * fqid * (k + 1) / (
-                    fqid + k * (1 - b + (b * D / avgdl)))
+                # score calculated, the same as the given one, but all of the parameter have been already calcualted
+                score += (log((N - nqi + 0.5) / (nqi + 0.5))) * 1.0 * fqid * (k + 1) / (fqid + k * (1 - b + (b * D / avgdl)))
+                # put the score in sorted_map via the document_key
                 sorted_map[document_item] = score
 
         # Before the output, we need to use the sort function to sort it by value

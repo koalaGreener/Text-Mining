@@ -170,13 +170,7 @@ if __name__ == '__main__':
             rel_list = calculate_ndcg_MMR(term_id, k, term_docid, term_docid_rel_dict)
             # only assign to the array that have k value
             avg_ndcg_score[k] += rel_list
-            # if( k == 1 or k == 5):
-            # print(str(k) + "    |   %.2f" % (rel_list))
-            # else:
-            # print(str(k) + "   |   %.2f" % (rel_list))
 
-
-    # print("")
     Denominator_BM25 = 48
     Denominator_MMR = 50
     Denominator = Denominator_MMR

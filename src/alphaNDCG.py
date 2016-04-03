@@ -17,10 +17,8 @@ def readTheFile_rel(filename):
         full_dict = {}
         for line in infile:
             # str:int
-            temp_dict = {}
             full_dict[line.split(" ")[0] + " " + line.split(" ")[2]] = int(line.split(" ")[3])
         return full_dict
-        # print(full_dict)
 
 
 def readTheFile_diversity_score(filename):
@@ -28,10 +26,8 @@ def readTheFile_diversity_score(filename):
         full_dict = {}
         for line in infile:
             # str:int
-            temp_dict = {}
             full_dict[line.split(" ")[0] + " " + line.split(" ")[2]] = int(line.split(" ")[1])
         return full_dict
-        # print(full_dict)
 
 # return the term_ids that appear in the file
 def readTheFile_term(filename):
@@ -113,8 +109,8 @@ if __name__ == '__main__':
 
     # avg_ndcg_score is for saving the score of each alpha_NDCG
     avg_ndcg_score = [0.0] * 51
-    # For Every Term
 
+    # For Every Term
     for term_id in term_dict:
         # if you want to detailed data of each term_id, you should delete the comments below
         # print("")
@@ -125,8 +121,7 @@ if __name__ == '__main__':
             # only assign to the array that have k value
             avg_ndcg_score[k] += rel_list
 
-    Denominator_MMR_Portfolio = 50
-    Denominator = Denominator_MMR_Portfolio
+    Denominator = 50
     alpha = 0.1
     print("MMR")
     print("lambda = 0.25")
