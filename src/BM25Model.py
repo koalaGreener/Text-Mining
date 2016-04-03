@@ -1,4 +1,4 @@
-from math import log, log2
+from math import log
 
 
 def func(qi, document_num_name):
@@ -11,7 +11,9 @@ def func(qi, document_num_name):
 
 def readTheFile(document_name, query_name):
 
+    # the list of 'return_value' is contained with the answer
     return_value = []
+
     # Parameters
     b = 0.75
     k = 1.5
@@ -73,7 +75,7 @@ def readTheFile(document_name, query_name):
         qi_list = query_id.get(query_item)
         sorted_map = {}
         ranking = 0
-        #(second one)
+        #   the second one
         for document_item in document_id:
             score = 0.0
 
@@ -99,6 +101,7 @@ def readTheFile(document_name, query_name):
                 score += (log((N - nqi + 0.5) / (nqi + 0.5))) * 1.0 * fqid * (k + 1) / (
                 fqid + k * (1 - b + (b * D / avgdl)))
                 sorted_map[document_item] = score
+
         ranked_result = sorted(sorted_map.items(), key=lambda x: x[1])
         ranked_result.reverse()
 
@@ -109,7 +112,6 @@ def readTheFile(document_name, query_name):
             return_value.append(str(query_item) + " Q0 " + str(everyitem).strip("' ( '").split("',")[0] + " " + str(ranking) + str(everyitem).strip("'( ')").split(",")[1] + " bm25")
             ranking += 1
     return return_value
-
 
 
 

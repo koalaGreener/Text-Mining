@@ -86,7 +86,7 @@ def calculate_ndcg_MMR(term_id, k, term_docid, term_docid_rel_dict):
 def calculate_ndcg(term_id, k, term_docid, term_docid_rel_dict):
     rel_list = []
 
-    # 241, 219 do not exist
+    # 241, 219 term_id do not exist
     if int(term_id) < 219:
         start_index = 50 * (int(term_id) - 201)
     elif int(term_id) < 241 and int(term_id) > 219:
