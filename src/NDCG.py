@@ -148,6 +148,10 @@ if __name__ == '__main__':
     term_dict = readTheFile_term("../output/Q3/MMR_0.5.txt")
     term_docid = readTheFile_dcg_MMR("../output/Q3/MMR_0.5.txt")
 
+    # Portfolio NDCG score
+    term_dict = readTheFile_term("../output/Q4/Portfolio_4.txt")
+    term_docid = readTheFile_dcg_MMR("../output/Q4/Portfolio_4.txt")
+
 
 
 
