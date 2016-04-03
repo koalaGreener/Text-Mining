@@ -81,8 +81,8 @@ def eddj(d, dj):  # {} {}
 def portfolio(mmr_query_id, Q1_sequence, document_term_vector):  # [] {}
     # temp [201 clueweb12-1700tw-11-11014, 201 clueweb12-1700tw-11-11014]
     # document_term_vector { clueweb12-1700tw-11-11014: {1:1,2:2,3:3}}
-    b1 = 4.0
-    b2 = -4.0
+    b2 = 4.0
+    b1 = -4.0
     # query_term_vector  -> q
     D = dict()  # 全部记录在案的 doc_id 100个
     D_ranking = dict()  # 对应的 ranking
@@ -94,7 +94,7 @@ def portfolio(mmr_query_id, Q1_sequence, document_term_vector):  # [] {}
 
     chosen_document_id = Q1_sequence[0].split(" ")[1]
 
-    print("%d  q0  %s   %3d  %.7f" % (mmr_query_id, chosen_document_id, 1, D[chosen_document_id] - 4.0 * (1 / (D_ranking[chosen_document_id] + 1))))
+    print("%d  q0  %s   %3d  %.7f" % (mmr_query_id, chosen_document_id, 1, D[chosen_document_id] - b1 * (1 / (D_ranking[chosen_document_id] + 1))))
     del D[chosen_document_id]
     chosen_score = -999.0
     chosen_document_id = ''
@@ -112,7 +112,7 @@ def portfolio(mmr_query_id, Q1_sequence, document_term_vector):  # [] {}
                 #print(j)
                 sum_value += (1 / pow(2, j)) * eddj(document_term_vector[document_id], document_term_vector[Dq[j - 1]])
 
-            score = D[document_id] - 4.0 * (1 / (D_ranking[document_id] + 1) ) - 8.0 * sum_value
+            score = D[document_id] - b1 * (1 / (D_ranking[document_id] + 1) ) - 2 * b1 * sum_value
             if score > chosen_score:
                 chosen_score = score
                 chosen_document_id = document_id
