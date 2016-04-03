@@ -65,8 +65,8 @@ def mmr(mmr_query_id, temp, document_term_vector, query_term_vector):  # [] {} {
     # temp [201 clueweb12-1700tw-11-11014, 201 clueweb12-1700tw-11-11014]
     # document_term_vector { clueweb12-1700tw-11-11014: {1:1,2:2,3:3}}
     # query_term_vector    {1:1,2:1,3:1}
-    lambda1 = 0.5
-    lambda2 = 0.25
+    lambda2 = 0.5
+    lambda1 = 0.25
     # query_term_vector  -> q
     D = dict()  # 全部记录在案的 doc_id 100个
     Dq = dict()  # 那个不断放进去的
@@ -82,7 +82,7 @@ def mmr(mmr_query_id, temp, document_term_vector, query_term_vector):  # [] {} {
     # initial
     for document_id in D:
         # score = Calculate_mmr(query_term_vector, document_term_vector[document_id], Dq)
-        score = 0.5 * sim(query_term_vector, document_term_vector[document_id])
+        score = 0.25 * sim(query_term_vector, document_term_vector[document_id])
         if score > chosen_score:
             chosen_score = score
             chosen_document_id = document_id
