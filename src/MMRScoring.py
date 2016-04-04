@@ -70,8 +70,8 @@ def mmr(mmr_query_id, temp, document_term_vector, query_term_vector):  # [] {} {
     # query_term_vector    {1:1,2:1,3:1}
 
     # Parameters
-    lambda2 = 0.5
-    lambda1 = 0.25
+    lambda1 = 0.5
+    lambda2 = 0.25
     # query_term_vector  -> q
     D = dict()  # The D dcit included all of the doc_id, 100 doc_id
     Dq = dict()  # The Dq dict is empty at the very beginning
@@ -127,22 +127,23 @@ if __name__ == '__main__':
 
     # read the data
     Query_document_Q1 = readTheFile_Query_document_Q1("../data/Q3/Q1answer.txt")
+    # return the {document_id {1:2}, document_id {1:2}}
     document_term_vector = readTheFile_document_term_vector("../data/Q3/document_term_vectors.dat")
     query_term_vector = readTheFile_query_term_vector("../data/Q3/query_term_vectors.dat")
 
-    # Use the count to call the mmr when data reached a fixed value, and the data will store in temp dictionary
+    # Use the count to call the mmr when data reached a fixed value, and the data will store in Q1_sequence dictionary
     count = 0
-    temp = dict()
+    Q1_sequence = dict()
 
     # iteration of all the record in Query_document_Q1
     for query_document_record_in_Q1 in Query_document_Q1:
-        temp[query_document_record_in_Q1] = 0
+        Q1_sequence[query_document_record_in_Q1] = 0
         count += 1
         # For every 100 data, we will use the MMR to calculate the score, because every 100 data the term_id changed (201 -> 202 -> 203)
         if count % 100 == 0:
             # find out what exactly t he term_id is, such as 201, 202
             index = int(query_document_record_in_Q1.split(" ")[0])
             # Used the mmr function to calculate the score
-            mmr(int(200 + count/100), temp, document_term_vector, query_term_vector[index])
+            mmr(int(200 + count/100), Q1_sequence, document_term_vector, query_term_vector[index])
             # clear the dictionary
             temp = dict()

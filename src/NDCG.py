@@ -116,8 +116,6 @@ def calculate_ndcg(term_id, k, term_docid, term_docid_rel_dict):
 
 
 ######################################## # main function Started here ################################################
-
-
 # main function
 if __name__ == '__main__':
 
@@ -161,6 +159,7 @@ if __name__ == '__main__':
         for k in (1, 5, 10, 20, 30, 40, 50):
             rel_list = calculate_ndcg(term_id, k, term_docid, term_docid_rel_dict)
             #rel_list = calculate_ndcg_MMR(term_id, k, term_docid, term_docid_rel_dict)
+
             # only assign to the array that have k value
             avg_ndcg_score[k] += rel_list
 
@@ -169,8 +168,8 @@ if __name__ == '__main__':
     Denominator_MMR = 50
     Denominator = Denominator_BM25
     print("bm25")
-    print("1    |   %.2f" % (avg_ndcg_score[1] /  Denominator))
-    print("5    |   %.2f" % (avg_ndcg_score[5] /  Denominator))
+    print("1    |   %.2f" % (avg_ndcg_score[1]  / Denominator))
+    print("5    |   %.2f" % (avg_ndcg_score[5]  / Denominator))
     print("10   |   %.2f" % (avg_ndcg_score[10] / Denominator))
     print("20   |   %.2f" % (avg_ndcg_score[20] / Denominator))
     print("30   |   %.2f" % (avg_ndcg_score[30] / Denominator))

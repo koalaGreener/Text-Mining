@@ -12,6 +12,7 @@ def readTheFile_dcg_MMR(filename):
 
 
 # return the term_id and doc_id and relevant rel_score
+# return {'245 clueweb12-0811wb-68-09098': 0, '220 clueweb12-0001wb-39-03579': 0....
 def readTheFile_rel(filename):
     with open(filename) as infile:
         full_dict = {}
@@ -20,7 +21,8 @@ def readTheFile_rel(filename):
             full_dict[line.split(" ")[0] + " " + line.split(" ")[2]] = int(line.split(" ")[3])
         return full_dict
 
-
+# return the diversity score of each data
+# return {'226 clueweb12-0604wb-17-12639': 6, '242 clueweb12-0914wb-11-02891': 4....
 def readTheFile_diversity_score(filename):
     with open(filename) as infile:
         full_dict = {}
@@ -88,11 +90,15 @@ def calculate_ndcg_MMR(term_id, k, term_docid, term_docid_rel_dict, term_docid_d
 if __name__ == '__main__':
 
     # intput the data of Rel (str:int)
+    # return {'245 clueweb12-0811wb-68-09098': 0, '220 clueweb12-0001wb-39-03579': 0....
     term_docid_rel_dict = readTheFile_rel("../data/Q5/qrels.ndeval.txt")
 
     # readTheFile_diversity_score
+    # return {'226 clueweb12-0604wb-17-12639': 6, '242 clueweb12-0914wb-11-02891': 4....
     term_docid_diversity_score_dict = readTheFile_diversity_score("../data/Q5/qrels.ndeval.txt")
 
+
+    ##################### The default data is portfolio, if you want to use the mmr one, you should add the commenet to cover the portfolio one
     # MMR NDCG score
     # only the term id int
     term_dict = readTheFile_term("../data/Q5/MMR_0.25.txt")
