@@ -29,7 +29,11 @@ def readTheFile_rel(filename):
         full_dict = {}
         for line in infile:
             # str:int
-            full_dict[line.split(" ")[0] + " " + line.split(" ")[2]] = int(line.split(" ")[3])
+            #
+            if int(line.split(" ")[3]) == -2:
+                full_dict[line.split(" ")[0] + " " + line.split(" ")[2]] = 0
+            else:
+                full_dict[line.split(" ")[0] + " " + line.split(" ")[2]] = int(line.split(" ")[3])
         return full_dict
 
 
